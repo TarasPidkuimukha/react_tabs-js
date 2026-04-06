@@ -3,6 +3,12 @@ import classNames from 'classnames';
 export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
   const foundId = tabs.find(tab => tab.id === activeTabId) || tabs[0];
 
+  function handleTabClick(tab) {
+    if (tab.id !== activeTabId) {
+      onTabSelected(tab.id);
+    }
+  }
+
   return (
     <div data-cy="TabsComponent">
       <div className="tabs is-boxed">
@@ -13,15 +19,7 @@ export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
               data-cy="Tab"
               className={classNames({ 'is-active': tab.id === foundId.id })}
             >
-              <a
-                href={`#${tab.id}`}
-                data-cy="TabLink"
-                onClick={() => {
-                  if (tab.id !== activeTabId) {
-                    onTabSelected(tab.id);
-                  }
-                }}
-              >
+              <a href={`#${tab.id}`} data-cy="TabLink" onClick={handleTabClick}>
                 {tab.title}
               </a>
             </li>
